@@ -23,6 +23,9 @@ module.exports = {
 			fontFamily: {
 				Josefin: ["'Josefin Sans', sans-serif"],
 			},
+			backgroundImage: {
+				bgLightMobile: "url('./src/assets/bg-mobile-light.jpg')",
+			},
 		},
 	},
 	plugins: [],

@@ -1,5 +1,6 @@
 import DeleteIcon from "../assets/icon-cross.svg";
 import CheckIcon from "../assets/icon-check.svg";
+import { useState } from "react";
 
 interface Props {
 	todo: { task: string; isCompleted: boolean; id: string };
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const TodoContainer = ({ todo, setMainTodo }: Props) => {
+	const [showDeleteIcon, setShowDeleteIcon] = useState(false);
+
 	const deleteTodo = (id: string) => {
 		setMainTodo((prevState) => {
 			return prevState.filter((todo) => todo.id !== id);
@@ -30,21 +33,24 @@ const TodoContainer = ({ todo, setMainTodo }: Props) => {
 	};
 
 	return (
-		<div key={todo.id} className="w-full mx-auto p-4 border-b-2 flex justify-between items-center">
-			<div className="flex gap-4 items-center">
+		<div
+			key={todo.id}
+			className="w-full mx-auto p-4 border-b-2 flex justify-between items-center text-VeryDarkBlue"
+			onMouseEnter={() => setShowDeleteIcon(true)}
+			onMouseLeave={() => setShowDeleteIcon(false)}>
+			<div className="flex gap-4 items-center" onClick={() => changeToComplete(todo.id)}>
 				<img
 					src={CheckIcon}
 					alt=""
-					className={`p-2 border-2 hover:border-DarkGrayishBlue   rounded-full ${
+					className={`p-[.4rem] border-[1px] hover:border-DarkGrayishBlue   rounded-full ${
 						todo.isCompleted
 							? "bg-gradient-to-r from-LinerFrom to-LinearTo border-white"
 							: "bg-white"
 					}`}
-					onClick={() => changeToComplete(todo.id)}
 				/>
 				<p
-					className={`text-xl ${
-						todo.isCompleted ? "text-LightGrayishBlue line-through" : "text-DarkGrayishBlue"
+					className={`text-xl cursor-pointer ${
+						todo.isCompleted ? "text-LightGrayishBlue line-through" : "text-VeryDarkBlue"
 					}`}>
 					{todo.task}
 				</p>
@@ -53,7 +59,7 @@ const TodoContainer = ({ todo, setMainTodo }: Props) => {
 				src={DeleteIcon}
 				onClick={() => deleteTodo(todo.id)}
 				alt="Close btn"
-				className={`cursor-pointer ${todo.isCompleted && "hidden"}`}
+				className={`cursor-pointer ${showDeleteIcon ? "static" : "hidden"} `}
 			/>
 		</div>
 	);

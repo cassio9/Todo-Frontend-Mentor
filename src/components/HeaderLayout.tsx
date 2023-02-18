@@ -7,7 +7,7 @@ import SunIcon from "../assets/icon-sun.svg";
 
 const HeaderLayout = () => {
 	return (
-		<header className="pt-20 pb-8 w-[80%] z-10 ">
+		<header className={`pt-20 pb-8 w-[80%] z-10`}>
 			<div className="flex items-center justify-between" style={{ zIndex: 10 }}>
 				<h1 className="text-4xl font-bold text-white tracking-[.6rem]">TODO</h1>
 				<img src={MoonIcon} alt="" />
