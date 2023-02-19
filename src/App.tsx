@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./App.css";
 import InputMain from "./components/InputMain";
 import TodoContainer from "./components/TodoContainer";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function App() {
 	const [mainTodo, setMainTodo] = useState<{ task: string; isCompleted: boolean; id: string }[]>(
