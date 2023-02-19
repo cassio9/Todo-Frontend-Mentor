@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+	darkMode: "class",
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
@@ -25,6 +26,9 @@ module.exports = {
 			},
 			backgroundImage: {
 				bgLightMobile: "url('./src/assets/bg-mobile-light.jpg')",
+				bgLightDesktop: "url('./src/assets/bg-desktop-light.jpg')",
+				bgDarkMobile: "url('./src/assets/bg-mobile-dark.jpg')",
+				bgDarkDesktop: "url('./src/assets/bg-desktop-dark.jpg')",
 			},
 		},
 	},

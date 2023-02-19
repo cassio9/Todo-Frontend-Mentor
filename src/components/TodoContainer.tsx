@@ -33,24 +33,27 @@ const TodoContainer = ({ todo, setMainTodo }: Props) => {
 	};
 
 	return (
-		<div
-			key={todo.id}
-			className="w-full mx-auto p-4 border-b-2 flex justify-between items-center text-VeryDarkBlue"
+		<article
+			className="w-full mx-auto p-4 border-b-[1px] flex justify-between items-center text-VeryDarkBlue dark:border-DarkGrayishBlue"
 			onMouseEnter={() => setShowDeleteIcon(true)}
 			onMouseLeave={() => setShowDeleteIcon(false)}>
-			<div className="flex gap-4 items-center" onClick={() => changeToComplete(todo.id)}>
-				<img
-					src={CheckIcon}
-					alt=""
-					className={`p-[.4rem] border-[1px] hover:border-DarkGrayishBlue   rounded-full ${
-						todo.isCompleted
-							? "bg-gradient-to-r from-LinerFrom to-LinearTo border-white"
-							: "bg-white"
-					}`}
-				/>
+			<div
+				className="grid grid-cols-[30px_1fr_30px] gap-4 items-start"
+				onClick={() => changeToComplete(todo.id)}>
+				{todo.isCompleted ? (
+					<img
+						src={CheckIcon}
+						alt="Check Icon"
+						className={`w-6 h-6 p-[.4rem] border-[1px] dark:border-0 hover:border-DarkGrayishBlue rounded-full bg-gradient-to-r from-LinerFrom to-LinearTo border-white`}
+					/>
+				) : (
+					<div className="w-6 h-6 border-[1px] border-DarkGrayishBlue rounded-full  hover:border-l-LinerFrom hover:border-t-LinerFrom hover:border-b-LinearTo hover:border-r-LinearTo"></div>
+				)}
 				<p
-					className={`text-xl cursor-pointer ${
-						todo.isCompleted ? "text-LightGrayishBlue line-through" : "text-VeryDarkBlue"
+					className={`text-xl cursor-pointer w-full truncate ${
+						todo.isCompleted
+							? "text-LightGrayishBlue dark:text-VeryDarkGrayishBlue line-through"
+							: "text-VeryDarkBlue dark:text-VeryLightGrayishBlue"
 					}`}>
 					{todo.task}
 				</p>
@@ -61,7 +64,7 @@ const TodoContainer = ({ todo, setMainTodo }: Props) => {
 				alt="Close btn"
 				className={`cursor-pointer ${showDeleteIcon ? "static" : "hidden"} `}
 			/>
-		</div>
+		</article>
 	);
 };
 
