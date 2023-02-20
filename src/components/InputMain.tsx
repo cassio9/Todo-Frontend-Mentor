@@ -12,8 +12,13 @@ interface Props {
 			}[]
 		>
 	>;
+	mainTodo: {
+		task: string;
+		isCompleted: boolean;
+		id: string;
+	}[];
 }
-const InputMain = ({ setMainTodo }: Props) => {
+const InputMain = ({ setMainTodo, mainTodo }: Props) => {
 	const [newTodo, setNewTodo] = useState("");
 
 	const newTodoAdd = (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,6 +26,10 @@ const InputMain = ({ setMainTodo }: Props) => {
 		setMainTodo((prevState) => {
 			return [...prevState, { task: newTodo, isCompleted: false, id: nanoid() }];
 		});
+		localStorage.setItem(
+			"todoFrontendMentor",
+			JSON.stringify([...mainTodo, { task: newTodo, isCompleted: false, id: nanoid() }])
+		);
 		setNewTodo("");
 	};
 

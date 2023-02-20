@@ -1,6 +1,6 @@
 import DeleteIcon from "../assets/icon-cross.svg";
 import CheckIcon from "../assets/icon-check.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
 	todo: { task: string; isCompleted: boolean; id: string };

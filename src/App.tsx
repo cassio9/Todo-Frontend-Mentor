@@ -1,16 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import InputMain from "./components/InputMain";
 import TodoContainer from "./components/TodoContainer";
 
 function App() {
-	const [mainTodo, setMainTodo] = useState<{ task: string; isCompleted: boolean; id: string }[]>(
-		[]
-	);
+	const todoLocalStorage = localStorage.getItem("todoFrontendMentor");
+	const todoParse = todoLocalStorage !== null ? JSON.parse(todoLocalStorage) : [];
+
+	const [mainTodo, setMainTodo] = useState<
+		{
+			task: string;
+			isCompleted: boolean;
+			id: string;
+		}[]
+	>(todoParse);
+
 	const [isFiltered, setIsFiltered] = useState({
 		isFilteredCompleted: false,
 		isFilteredActive: false,
 	});
+
+	useEffect(() => {
+		localStorage.setItem("todoFrontendMentor", JSON.stringify(mainTodo));
+	}, [mainTodo]);
 
 	const clearCompleted = () => {
 		setMainTodo((prevState) => {
@@ -29,21 +41,28 @@ function App() {
 
 	return (
 		<main className="font-Josefin bg-VeryLightGrayishBlue dark:bg-VeryDarkBlue min-h-screen dark:text-DarkGrayishBlue max-h-fit ">
-			<InputMain setMainTodo={setMainTodo} />
+			<InputMain setMainTodo={setMainTodo} mainTodo={mainTodo} />
 			<div className="-translate-y-16 max-w-xl mx-auto px-10">
 				<div className="mt-5 rounded-lg bg-white dark:bg-VeryDarkUnsaturatedBlue">
-					{mainTodo && isFiltered.isFilteredActive
-						? filterActive.map((todo) => (
-								<TodoContainer key={todo.id} todo={todo} setMainTodo={setMainTodo} />
-						  ))
-						: isFiltered.isFilteredCompleted
-						? filterCompleted.map((todo) => (
-								<TodoContainer key={todo.id} todo={todo} setMainTodo={setMainTodo} />
-						  ))
-						: mainTodo.map((todo) => {
-								return <TodoContainer key={todo.id} todo={todo} setMainTodo={setMainTodo} />;
-						  })}
-
+					{mainTodo && isFiltered.isFilteredActive ? (
+						filterActive.map((todo) => (
+							<TodoContainer key={todo.id} todo={todo} setMainTodo={setMainTodo} />
+						))
+					) : isFiltered.isFilteredCompleted ? (
+						filterCompleted.map((todo) => (
+							<TodoContainer key={todo.id} todo={todo} setMainTodo={setMainTodo} />
+						))
+					) : (
+						<div>
+							{mainTodo.map((todo) => {
+								return (
+									<div key={todo.id}>
+										<TodoContainer todo={todo} setMainTodo={setMainTodo} />
+									</div>
+								);
+							})}
+						</div>
+					)}
 					<div className="flex justify-between p-4 ">
 						<p className="text-DarkGrayishBlue dark:text-DarkGrayishBlue">{countLeft} items left</p>
 						<p
