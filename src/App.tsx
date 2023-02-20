@@ -3,17 +3,18 @@ import "./App.css";
 import InputMain from "./components/InputMain";
 import TodoContainer from "./components/TodoContainer";
 
-function App() {
-	const todoLocalStorage = localStorage.getItem("todoFrontendMentor");
-	const todoParse = todoLocalStorage !== null ? JSON.parse(todoLocalStorage) : [];
+interface Todo {
+	task: string;
+	isCompleted: boolean;
+	id: string;
+}
 
-	const [mainTodo, setMainTodo] = useState<
-		{
-			task: string;
-			isCompleted: boolean;
-			id: string;
-		}[]
-	>(todoParse);
+function App() {
+	const [mainTodo, setMainTodo] = useState<Todo[]>(
+		localStorage.getItem("todoFrontendMentor") !== null
+			? JSON.parse(localStorage.getItem("todoFrontendMentor")!)
+			: []
+	);
 
 	const [isFiltered, setIsFiltered] = useState({
 		isFilteredCompleted: false,
@@ -26,7 +27,7 @@ function App() {
 
 	const clearCompleted = () => {
 		setMainTodo((prevState) => {
-			return prevState.filter((todo) => todo.isCompleted == false);
+			return prevState.filter((todo: Todo) => todo.isCompleted == false);
 		});
 	};
 
@@ -119,7 +120,7 @@ function App() {
 						Completed
 					</p>
 				</div>
-				{/* <p className="text-center pt-4">Drag and drop to reorder list</p> */}
+				{/* <p className="text-center pt-4">Drag and drop to reorder list</p> I Couldn't build it */}
 			</div>
 		</main>
 	);
